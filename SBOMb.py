@@ -23,6 +23,10 @@ def art():
     print("Keeping your software safe from going BOOM post-production")
     print('==========================================================\n')
 
+def NVD_search(x):
+    result = nvdlib.searchCVE(keywordSearch=comp_name)
+    print(result)
+
 #Loading the JSON object and generating the dictionaries of data
 #data_output_file = open("componentsandversions.txt", "a")
 
@@ -36,8 +40,7 @@ if arguments.jsonfile is not None:
         version_formatted = version[2:-2]
         print(Fore.WHITE + "Component name: " + Fore.GREEN + name_formatted + " | " + Fore.WHITE + "version: " + Fore.GREEN + version_formatted)
         #data_output_file.write(f"Component name: {component['name']} | version: {component['version']}\n")
-        #CVE_search = nvdlib.searchCVE(keywordSearch=component['name'])
-        #print(CVE_search)
+        #NVD_search(name_formatted)
 
 
 if arguments.txtfile is not None:
@@ -48,8 +51,7 @@ if arguments.txtfile is not None:
         name = line.split("@")[0]
         version = line.split("@")[1]
         print(Fore.WHITE + "Searching NVD for vulnerabilities related to: " + Fore.GREEN + name + Fore.WHITE + " version: " + Fore.GREEN + version)
-        #CVE_search = nvdlib.searchCVE(keywordSearch=line)
-        #print(CVE_search)
+        ##NVD_search(line)
 
 if arguments.xmlfile is not None:
     art()
@@ -68,7 +70,6 @@ if arguments.xmlfile is not None:
         else:
             print(Fore.WHITE + "Component name: " + Fore.GREEN + comp_name + " | " + Fore.WHITE + "version: " + Fore.GREEN + version_number)
             #data_output_file.write("Component name: " + comp_name + " | " + "version: " + version_number)
-            #CVE_search = nvdlib.searchCVE(keywordSearch=comp_name)
-            #print(CVE_search)
+            #NVD_search(comp_name)
 
 #data_output_file.close()
