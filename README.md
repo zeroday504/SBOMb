@@ -6,12 +6,13 @@ SBOM.py will then query the NVD and see if any of the packages listed in the SBO
 
 The `bom.xml` and `bom.json` files are simple test files included for running the program and understanding what output should look like. These files are the SBOMs for OWASP's Juice Shop.
 
-```
-    ___  ___   _   _   __             
-  ,' _/ / o.),' \ / \,' //7     _ _ __
- _\ `. / o \/ o |/ \,' //o\    /o|\V /
-/___,'/___,'|_,'/_/ /_//_,'() /_,' )/
-                             //   //
+```                                             
+    ___  ___   _   _   __                       __.!,
+  ,' _/ / o.),' \ / \,' //7     _ _ __       __/  -*-
+ _\ `. / o \/ o |/ \,' //o\    /o|\V /     ,d08b. '|`
+/___,'/___,'|_,'/_/ /_//_,'() /_,' )/      0088MM
+                             //   //       '9MMP'
+                                                   
 usage: SBOMb.py [-h] [--jsonfilepath JSONFILE] [--txtfilepath TXTFILE] [--xmlfilepath XMLFILE]
 
 optional arguments:
