@@ -1,4 +1,4 @@
-# SBOMb
+# SBOMb.py
 
 SBOMb.py is a tool built to easily parse files that are a part of the CycloneDX SBOM format (JSON or XML) as well as take user-generated txt files that meet specific formatting requirements.
 
