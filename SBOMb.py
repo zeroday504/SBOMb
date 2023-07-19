@@ -10,6 +10,16 @@ parser.add_argument('--jsonfilepath', nargs=1, help="Path to JSON file from SBOM
 parser.add_argument('--txtfilepath', nargs=1, help="Path to txt file with SBOM dependency names", dest='txtfile', type=str)
 arguments = parser.parse_args()
 
+#ASCII Art
+print("    ___  ___   _   _   __             ")
+print("  ,' _/ / o.),' \ / \,' //7     _ _ __")
+print(" _\ `. / o \/ o |/ \,' //o\    /o|\V /")
+print("/___,'/___,'|_,'/_/ /_//_,'() /_,' )/") 
+print("                             //   //")
+print('==========================================================')
+print("Keeping your software safe from going BOOM post-production")
+print('==========================================================\n')
+
 #Loading the JSON object and generating the dictionaries of data
 #data_output_file = open("componentsandversions.txt", "a")
 
