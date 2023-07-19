@@ -13,19 +13,21 @@ parser.add_argument('--xmlfilepath', nargs=1, help="Path to XML file from SBOM t
 arguments = parser.parse_args()
 
 #ASCII Art
-print("    ___  ___   _   _   __                   __.!,   ")
-print("  ,' _/ / o.),' \ / \,' //7     _ _ __   __/  -*-   ") 
-print(" _\ `. / o \/ o |/ \,' //o\    /o|\V / ,d08b. '|`   ")
-print("/___,'/___,'|_,'/_/ /_//_,'() /_,' )/  0088MM       ")
-print("                             //   //   '9MMp'       ")
-print('==========================================================')
-print("Keeping your software safe from going BOOM post-production")
-print('==========================================================\n')
+def art():
+    print("    ___  ___   _   _   __                   __.!,   ")
+    print("  ,' _/ / o.),' \ / \,' //7     _ _ __   __/  -*-   ") 
+    print(" _\ `. / o \/ o |/ \,' //o\    /o|\V / ,d08b. '|`   ")
+    print("/___,'/___,'|_,'/_/ /_//_,'() /_,' )/  0088MM       ")
+    print("                             //   //   '9MMp'       ")
+    print('==========================================================')
+    print("Keeping your software safe from going BOOM post-production")
+    print('==========================================================\n')
 
 #Loading the JSON object and generating the dictionaries of data
 #data_output_file = open("componentsandversions.txt", "a")
 
 if arguments.jsonfile is not None:
+    art()
     json_data = json.load(arguments.jsonfile[0])
     for component in json_data['components']:
         name = str({component['name']})
@@ -39,6 +41,7 @@ if arguments.jsonfile is not None:
 
 
 if arguments.txtfile is not None:
+    art()
     txt_data = (arguments.txtfile[0])
     txt_file = open(txt_data, 'r')
     for line in txt_file.readlines():
@@ -49,6 +52,7 @@ if arguments.txtfile is not None:
         #print(CVE_search)
 
 if arguments.xmlfile is not None:
+    art()
     xml_file = (arguments.xmlfile[0])
     tree = ET.parse(xml_file)
     root = tree.getroot()
