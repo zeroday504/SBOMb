@@ -1,10 +1,8 @@
 # SBOMb
 
-SBOMb.py is a tool built to easily parse files that are a part of the CycloneDX SBOM format (JSON or XML) as well as take   
-user-generated txt files that meet specific formatting requirements.
+SBOMb.py is a tool built to easily parse files that are a part of the CycloneDX SBOM format (JSON or XML) as well as take user-generated txt files that meet specific formatting requirements.
 
-SBOM.py will then query the NVD and see if any of the packages listed in the SBOM files are predisposed to documented vulnerabilities. Please reference the included
-`dependencies.txt` to understand how to format txt files for this program.
+SBOM.py will then query the NVD and see if any of the packages listed in the SBOM files are predisposed to documented vulnerabilities. Please reference the included `dependencies.txt` to understand how to format txt files for this program.
 
 The `bom.xml` and `bom.json` files are simple test files included for running the program and understanding what output should look like. These files are the SBOMs for OWASP's Juice Shop.
 
