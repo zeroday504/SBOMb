@@ -13,11 +13,11 @@ parser.add_argument('--xmlfilepath', nargs=1, help="Path to XML file from SBOM t
 arguments = parser.parse_args()
 
 #ASCII Art
-print("    ___  ___   _   _   __             ")
-print("  ,' _/ / o.),' \ / \,' //7     _ _ __")
-print(" _\ `. / o \/ o |/ \,' //o\    /o|\V /")
-print("/___,'/___,'|_,'/_/ /_//_,'() /_,' )/") 
-print("                             //   //")
+print("    ___  ___   _   _   __                   __.!,   ")
+print("  ,' _/ / o.),' \ / \,' //7     _ _ __   __/  -*-   ") 
+print(" _\ `. / o \/ o |/ \,' //o\    /o|\V / ,d08b. '|`   ")
+print("/___,'/___,'|_,'/_/ /_//_,'() /_,' )/  0088MM       ")
+print("                             //   //   '9MMp'       ")
 print('==========================================================')
 print("Keeping your software safe from going BOOM post-production")
 print('==========================================================\n')
