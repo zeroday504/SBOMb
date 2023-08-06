@@ -23,9 +23,25 @@ def art():
     print("Keeping your software safe from going BOOM post-production")
     print('==========================================================\n')
 
-def NVD_search(x):
-    result = nvdlib.searchCVE(keywordSearch=comp_name)
-    print(result)
+def NVD_search(x,y):
+    query = x + " " + y
+    result = nvdlib.searchCVE(keywordSearch=query)
+    if len(result) == 0:
+        print (Fore.GREEN + "No CVEs found for " + query + "\n")
+    else:
+        for y in range(len(result)):
+            print(Fore.RED + "CVE identified: " + str(result[y].id))
+            if str(result[y].score[2]) == "CRITICAL":
+                print(Fore.LIGHTRED_EX + "Severity: " + str(result[y].score[2]))
+            elif str(result[y].score[2]) == "HIGH":
+                print(Fore.RED + "Severity: " + str(result[y].score[2]))
+            elif str(result[y].score[2]) == "MEDIUM":
+                print(Fore.YELLOW + "Severity: " + str(result[y].score[2]))
+            else:
+                print(Fore.WHITE + "Severity: " + str(result[y].score[2]))
+            print(Fore.WHITE + "Description: " + str(result[y].descriptions[0].value))
+            print("Additional details can be found at: " + str(result[y].url))
+            print("===================================================================\n")
 
 #Loading the JSON object and generating the dictionaries of data
 #data_output_file = open("componentsandversions.txt", "a")
@@ -38,9 +54,10 @@ if arguments.jsonfile is not None:
         name_formatted = name[2:-2]
         version = str({component['version']})
         version_formatted = version[2:-2]
-        print(Fore.WHITE + "Component name: " + Fore.GREEN + name_formatted + " | " + Fore.WHITE + "version: " + Fore.GREEN + version_formatted)
+        print(Fore.WHITE + "Querying component name: " + Fore.GREEN + name_formatted + " | " + Fore.WHITE + "version: " + Fore.GREEN + version_formatted)
+        print(Fore.WHITE + "===================================================================")
         #data_output_file.write(f"Component name: {component['name']} | version: {component['version']}\n")
-        #NVD_search(name_formatted)
+        NVD_search(name_formatted,version_formatted)
 
 
 if arguments.txtfile is not None:
@@ -69,7 +86,8 @@ if arguments.xmlfile is not None:
             print(Fore.YELLOW + "Component name may be erroneous, double check original document: " + comp_name + " | " + "version: " + version_number)
         else:
             print(Fore.WHITE + "Component name: " + Fore.GREEN + comp_name + " | " + Fore.WHITE + "version: " + Fore.GREEN + version_number)
+            print(Fore.WHITE + "===================================================================")
             #data_output_file.write("Component name: " + comp_name + " | " + "version: " + version_number)
-            #NVD_search(comp_name)
+            NVD_search(comp_name,version_number)
 
 #data_output_file.close()
