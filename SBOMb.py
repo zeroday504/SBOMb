@@ -4,12 +4,8 @@ import nvdlib
 import colorama
 from colorama import Fore
 import xml.etree.ElementTree as ET
-from pyExploitDb import PyExploitDb
-import cve_searchsploit as CS
 import time
 import progressbar
-import requests
-from bs4 import BeautifulSoup
 from googlesearch import search
 
 
