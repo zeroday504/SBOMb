@@ -4,12 +4,21 @@ import nvdlib
 import colorama
 from colorama import Fore
 import xml.etree.ElementTree as ET
+from pyExploitDb import PyExploitDb
+import cve_searchsploit as CS
+import time
+import progressbar
+import requests
+from bs4 import BeautifulSoup
+from googlesearch import search
+
 
 
 parser = argparse.ArgumentParser(description='SBOMb.py is a tool built to easily parse files that are a part of the CycloneDX SBOM format (JSON or XML) as well as take user-generated txt files that meet specific formatting requirements. SBOM.py will then query the NVD and see if any of the packages listed in the SBOM files are predisposed to documented vulnerabilities. Please reference the included \'dependencies.txt\' to understand how to format txt files for this program.')
 parser.add_argument('--jsonfilepath', nargs=1, help="Path to JSON file from SBOM to be parsed", dest='jsonfile', type=argparse.FileType('r', encoding="utf8"))
 parser.add_argument('--txtfilepath', nargs=1, help="Path to txt file with SBOM dependency names", dest='txtfile', type=str)
 parser.add_argument('--xmlfilepath', nargs=1, help="Path to XML file from SBOM to be parsed", dest='xmlfile', type=argparse.FileType('r', encoding="utf8"))
+parser.add_argument('--exploitcheck', help="Check for existing exploits against identified CVEs, MAY GET RATE LIMITED", dest='exploitcheck', action='store_true')
 arguments = parser.parse_args()
 
 #ASCII Art
@@ -23,14 +32,33 @@ def art():
     print("Keeping your software safe from going BOOM post-production")
     print('==========================================================\n')
 
+cve_listing = open("cves.txt", "a")
+#if arguments.exploitcheck == True:
+    #pEdb = PyExploitDb()
+    #pEdb.debug = False
+    #pEdb.openFile()
+    #CS.update_db()
+
+
+def barofprogress():
+    bar = progressbar.ProgressBar(max_value=progressbar.UnknownLength)
+    for i in range(20):
+        time.sleep(0.1)
+        bar.update(i)
+
 def NVD_search(x,y):
     query = x + " " + y
+    print("Checking against NVD for documented vulnerabilities...")
     result = nvdlib.searchCVE(keywordSearch=query)
+    #barofprogress()
+    #print("\n")
     if len(result) == 0:
         print (Fore.GREEN + "No CVEs found for " + query + "\n")
     else:
         for y in range(len(result)):
             print(Fore.RED + "CVE identified: " + str(result[y].id))
+            CVE = str(result[y].id)
+            cve_listing.write("\n" + CVE + " (" + x + "package)" + "\n")
             if str(result[y].score[2]) == "CRITICAL":
                 print(Fore.LIGHTRED_EX + "Severity: " + str(result[y].score[2]))
             elif str(result[y].score[2]) == "HIGH":
@@ -39,8 +67,26 @@ def NVD_search(x,y):
                 print(Fore.YELLOW + "Severity: " + str(result[y].score[2]))
             else:
                 print(Fore.WHITE + "Severity: " + str(result[y].score[2]))
-            print(Fore.WHITE + "Description: " + str(result[y].descriptions[0].value))
+            #print(Fore.WHITE + "Description: " + str(result[y].descriptions[0].value))
             print("Additional details can be found at: " + str(result[y].url))
+            if arguments.exploitcheck == True:
+                print(Fore.WHITE + "\nChecking for CVE exploits on Exploit-DB...")
+                exploit_search = search(str(CVE) + " site:https://www.exploit-db.com", stop=10)
+                for result in exploit_search:
+                    if "exploit-db.com/exploits" in result:
+                        print(Fore.YELLOW + "Potential CVE exploits identified, URLs below:")
+                        print(result)
+                        cve_listing.write("Exploit-DB Potential Exploits:\n")
+                        cve_listing.write(result + "\n")
+                print(Fore.WHITE + "\nChecking for CVE exploits on GitHub...")
+                #barofprogress()
+                github_search = search(str(CVE) + "exploit site:https://www.github.com", stop=10)
+                for result in github_search:
+                    if "www.github.com" in result:
+                        print(Fore.YELLOW + "Potential CVE exploits found, URLs below:")
+                        print(result)
+                        cve_listing.write("GitHub Potential Exploits:\n")
+                        cve_listing.write(result + "\n")
             print("===================================================================\n")
 
 #Loading the JSON object and generating the dictionaries of data
@@ -91,3 +137,4 @@ if arguments.xmlfile is not None:
             NVD_search(comp_name,version_number)
 
 #data_output_file.close()
+
