@@ -85,7 +85,7 @@ def NVD_search(x,y):
             print("===================================================================\n")
 
 #Loading the JSON object and generating the dictionaries of data
-#data_output_file = open("componentsandversions.txt", "a")
+data_output_file = open("componentsandversions.txt", "a")
 
 if arguments.jsonfile is not None:
     art()
@@ -97,7 +97,7 @@ if arguments.jsonfile is not None:
         version_formatted = version[2:-2]
         print(Fore.WHITE + "Querying component name: " + Fore.GREEN + name_formatted + " | " + Fore.WHITE + "version: " + Fore.GREEN + version_formatted)
         print(Fore.WHITE + "===================================================================")
-        #data_output_file.write(f"Component name: {component['name']} | version: {component['version']}\n")
+        data_output_file.write(f"Component name: {component['name']} | version: {component['version']}\n")
         NVD_search(name_formatted,version_formatted)
 
 
@@ -109,7 +109,7 @@ if arguments.txtfile is not None:
         name = line.split("@")[0]
         version = line.split("@")[1]
         print(Fore.WHITE + "Searching NVD for vulnerabilities related to: " + Fore.GREEN + name + Fore.WHITE + " version: " + Fore.GREEN + version)
-        ##NVD_search(line)
+        NVD_search(line)
 
 if arguments.xmlfile is not None:
     art()
@@ -119,7 +119,6 @@ if arguments.xmlfile is not None:
     component_names = []
     for x in root[1]:
         value = x.get('bom-ref')
-        #print(value)
         formatted_value1 = value.split("@")[0]
         comp_name = formatted_value1.split("/")[1]
         version_number = value.split("@")[1]
@@ -128,8 +127,8 @@ if arguments.xmlfile is not None:
         else:
             print(Fore.WHITE + "Component name: " + Fore.GREEN + comp_name + " | " + Fore.WHITE + "version: " + Fore.GREEN + version_number)
             print(Fore.WHITE + "===================================================================")
-            #data_output_file.write("Component name: " + comp_name + " | " + "version: " + version_number)
+            data_output_file.write("Component name: " + comp_name + " | " + "version: " + version_number)
             NVD_search(comp_name,version_number)
 
-#data_output_file.close()
+data_output_file.close()
 
