@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 import time
 import progressbar
 from googlesearch import search
+import cve_searchsploit as CS
 
 
 
@@ -29,11 +30,8 @@ def art():
     print('==========================================================\n')
 
 cve_listing = open("cves.txt", "a")
-#if arguments.exploitcheck == True:
-    #pEdb = PyExploitDb()
-    #pEdb.debug = False
-    #pEdb.openFile()
-    #CS.update_db()
+if arguments.exploitcheck == True:
+    CS.update_db()
 
 
 def barofprogress():
@@ -66,23 +64,24 @@ def NVD_search(x,y):
             #print(Fore.WHITE + "Description: " + str(result[y].descriptions[0].value))
             print("Additional details can be found at: " + str(result[y].url))
             if arguments.exploitcheck == True:
-                print(Fore.WHITE + "\nChecking for CVE exploits on Exploit-DB...")
-                exploit_search = search(str(CVE) + " site:https://www.exploit-db.com", stop=10)
-                for result in exploit_search:
-                    if "exploit-db.com/exploits" in result:
-                        print(Fore.YELLOW + "Potential CVE exploits identified, URLs below:")
-                        print(result)
-                        cve_listing.write("Exploit-DB Potential Exploits:\n")
-                        cve_listing.write(result + "\n")
-                print(Fore.WHITE + "\nChecking for CVE exploits on GitHub...")
+                print(Fore.WHITE + "\nChecking for CVE exploits in searchsploit...")
+                exploit_search = CS.edbid_from_cve(str(CVE))
+                print(exploit_search)
+                #for result in exploit_search:
+                 #   if "exploit-db.com/exploits" in result:
+                  #      print(Fore.YELLOW + "Potential CVE exploits identified, URLs below:")
+                   #     print(result)
+                    #    cve_listing.write("Exploit-DB Potential Exploits:\n")
+                     #   cve_listing.write(result + "\n")
+                #print(Fore.WHITE + "\nChecking for CVE exploits on GitHub...")
                 #barofprogress()
-                github_search = search(str(CVE) + "exploit site:https://www.github.com", stop=10)
-                for result in github_search:
-                    if "www.github.com" in result:
-                        print(Fore.YELLOW + "Potential CVE exploits found, URLs below:")
-                        print(result)
-                        cve_listing.write("GitHub Potential Exploits:\n")
-                        cve_listing.write(result + "\n")
+                #github_search = search(str(CVE) + "exploit site:https://www.github.com", stop=10)
+                #for result in github_search:
+                 #   if "www.github.com" in result:
+                  #      print(Fore.YELLOW + "Potential CVE exploits found, URLs below:")
+                   #     print(result)
+                    #    cve_listing.write("GitHub Potential Exploits:\n")
+                     #   cve_listing.write(result + "\n")
             print("===================================================================\n")
 
 #Loading the JSON object and generating the dictionaries of data
