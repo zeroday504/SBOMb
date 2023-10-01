@@ -34,17 +34,10 @@ if arguments.exploitcheck == True:
     CS.update_db()
 
 
-def barofprogress():
-    bar = progressbar.ProgressBar(max_value=progressbar.UnknownLength)
-    for i in range(20):
-        time.sleep(0.1)
-        bar.update(i)
-
 def NVD_search(x,y):
     query = x + " " + y
     print("Checking against NVD for documented vulnerabilities...")
     result = nvdlib.searchCVE(keywordSearch=query)
-    #barofprogress()
     #print("\n")
     if len(result) == 0:
         print (Fore.GREEN + "No CVEs found for " + query + "\n")
@@ -74,7 +67,6 @@ def NVD_search(x,y):
                     #    cve_listing.write("Exploit-DB Potential Exploits:\n")
                      #   cve_listing.write(result + "\n")
                 #print(Fore.WHITE + "\nChecking for CVE exploits on GitHub...")
-                #barofprogress()
                 #github_search = search(str(CVE) + "exploit site:https://www.github.com", stop=10)
                 #for result in github_search:
                  #   if "www.github.com" in result:
