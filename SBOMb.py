@@ -8,7 +8,7 @@ import time
 import progressbar
 from googlesearch import search
 import cve_searchsploit as CS
-
+import datetime
 
 
 parser = argparse.ArgumentParser(description='SBOMb.py is a tool built to easily parse files that are a part of the CycloneDX SBOM format (JSON or XML) as well as take user-generated txt files that meet specific formatting requirements. SBOM.py will then query the NVD and see if any of the packages listed in the SBOM files are predisposed to documented vulnerabilities. Please reference the included \'dependencies.txt\' to understand how to format txt files for this program.')
@@ -30,6 +30,8 @@ def art():
     print('==========================================================\n')
 
 cve_listing = open("cves.txt", "a")
+cve_listing.truncate(0)
+cve_listing.write('Date now: %s' % datetime.datetime.now())
 if arguments.exploitcheck == True:
     CS.update_db()
 
@@ -60,6 +62,7 @@ def NVD_search(x,y):
                 print(Fore.WHITE + "\nChecking for CVE exploits in searchsploit...")
                 exploit_search = CS.edbid_from_cve(str(CVE))
                 print(exploit_search)
+                cve_listing.write("Exploit-DB ID: " + exploit_search)
                 #for result in exploit_search:
                  #   if "exploit-db.com/exploits" in result:
                   #      print(Fore.YELLOW + "Potential CVE exploits identified, URLs below:")
