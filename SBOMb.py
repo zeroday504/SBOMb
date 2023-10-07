@@ -62,7 +62,6 @@ def NVD_search(x,y):
                 print(Fore.WHITE + "\nChecking for CVE exploits in searchsploit...")
                 exploit_search = CS.edbid_from_cve(str(CVE))
                 print(exploit_search)
-                cve_listing.write("Exploit-DB ID: " + exploit_search)
                 #for result in exploit_search:
                  #   if "exploit-db.com/exploits" in result:
                   #      print(Fore.YELLOW + "Potential CVE exploits identified, URLs below:")
